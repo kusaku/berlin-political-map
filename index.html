@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b11">
+  <meta name="description" content="An interactive 3D political atlas of Berlin's twelve boroughs, with Assembly election history and citywide polling.">
+  <title>Political Atlas — Berlin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/maplibre-gl@6.10.0/dist/maplibre-gl.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=2">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J8N1Q1GVVB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-J8N1Q1GVVB");
+    (function(m,e,t,r,i,k,a){
+      m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+      m[i].l=1*new Date();
+      k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js?id=105986243", "ym");
+    ym(105986243, "init", {accurateTrackBounce:true, trackLinks:true});
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#state-details">Skip to results</a>
+  <div class="site-shell">
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="Political Atlas Berlin home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><b>POLITIKATLAS</b></a>
+      <span class="header-status"><i class="live-dot" aria-hidden="true"></i><span id="data-status">Loading local data…</span></span>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Political landscape · 12 boroughs</p>
+          <h1 id="page-title">Berlin,<br><span>borough by borough.</span></h1>
+          <p class="hero-intro">Assembly election results and Berlin-wide polling — on one map, with every comparable election since 2011.</p>
+        </div>
+        <div class="hero-metrics">
+          <div><span>12</span><small>boroughs mapped</small></div>
+          <div><span>5</span><small>election years</small></div>
+          <div><span>2026</span><small>latest Assembly vote</small></div>
+        </div>
+      </section>
+
+      <section class="atlas" aria-label="Interactive political map">
+        <div class="atlas-toolbar">
+          <div id="years" class="view-switch" role="group" aria-label="Assembly election year"></div>
+          <p id="view-description">Colour shows the borough winner. Height shows vote share.</p>
+        </div>
+        <div class="atlas-grid">
+          <div class="map-panel">
+            <div id="map" role="application" aria-label="Interactive 3D map of Berlin borough election results"></div>
+            <div id="legend" class="map-legend" aria-label="Filter map by party"></div>
+            <button id="reset-map" class="map-reset" type="button">Reset 3D</button>
+            <div id="tooltip" class="map-tooltip" role="tooltip" hidden></div>
+          </div>
+          <aside id="state-details" class="state-panel" aria-live="polite">
+            <div class="state-identity">
+              <div class="state-flag-frame"><img id="district-flag" class="state-flag" src="assets/berlin.svg" alt="Berlin flag"><span id="district-code">BERLIN</span></div>
+              <div><p class="eyebrow" id="identity-type">CITY OVERVIEW</p><h2 id="district-name">Berlin</h2><p id="district-subtitle" class="state-capital">All 12 boroughs</p></div>
+            </div>
+            <div class="election-alert"><div class="alert-label">SECOND VOTE · PARTY LIST</div><div class="alert-value"><strong id="result-heading">Assembly election · 2026</strong><span id="result-status">Provisional</span></div></div>
+            <section class="data-section election-section">
+              <div class="section-heading"><div><p class="section-label">RESULT BY PARTY</p><p id="result-note" class="section-note"></p></div><span id="vote-total" class="date-chip"></span></div>
+              <div id="result-bars" class="mini-bars"></div>
+              <a id="result-source" class="source-link" href="#" target="_blank" rel="noopener noreferrer">Official result ↗</a>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <section class="overview" aria-labelledby="table-heading">
+        <h2 id="table-heading">The city at a glance</h2>
+        <p class="overview-note"><span id="table-year">2026</span> Assembly election · borough second votes</p>
+        <div class="table-wrap"><table><thead><tr><th>Borough</th><th>Leading party</th><th>Vote share</th><th>Runner-up</th><th>Valid votes</th></tr></thead><tbody id="borough-table"></tbody></table></div>
+      </section>
+
+      <section class="polls-section" aria-labelledby="polls-heading">
+        <div class="polls-heading"><div><p class="eyebrow">BERLIN-WIDE ONLY</p><h2 id="polls-heading">Berlin polling</h2></div><a class="source-link" href="https://dawum.de/API/" target="_blank" rel="noopener noreferrer">Data: DAWUM ↗</a></div>
+        <p id="polls-note" class="polls-intro">These surveys sample Berlin as a whole. They are not estimates for individual boroughs.</p>
+        <div id="poll-cards" class="poll-cards"></div>
+      </section>
+
+      <section class="methodology" aria-labelledby="method-title">
+        <div><p class="eyebrow">SOURCES & SCOPE</p><h2 id="method-title">Real results. Clear boundaries.</h2></div>
+        <div class="method-copy"><p>Each borough is coloured from its official party-list second votes for the selected Abgeordnetenhaus election. Shares use valid second votes as the denominator; smaller parties are included in “Other”. The 2021 election was annulled and repeated in 2023, so its results are historical context only.</p><p>2026 results are provisional until the official final determination. Borough boundaries come from Berlin’s open ALKIS dataset. DAWUM polling is Berlin-wide only and licensed under ODbL.</p></div>
+      </section>
+    </main>
+    <footer><div class="footer-links"><a href="https://www.wahlen-berlin.de/wahlen/BE2026/Afspraes/agh/downloads.html" target="_blank" rel="noopener noreferrer">Elections: Berlin election authority</a><a href="https://daten.berlin.de/datensaetze/alkis-berlin-bezirke-wfs-ced31d7d" target="_blank" rel="noopener noreferrer">Map: Berlin Open Data (dl-de/zero-2.0)</a><a href="https://dawum.de/API/" target="_blank" rel="noopener noreferrer">Polls: DAWUM (ODbL)</a><a href="https://github.com/kusaku/berlin-political-map/commit/main" target="_blank" rel="noopener noreferrer">Version: latest commit</a><a href="https://kusaku.su/" target="_blank" rel="noopener noreferrer">by kusaku</a></div></footer>
+  </div>
+  <noscript>This atlas requires JavaScript.</noscript>
+  <script type="module" src="app.js?v=1"></script>
+</body>
+</html>
